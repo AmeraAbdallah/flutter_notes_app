@@ -92,11 +92,21 @@ class _RegisterState extends State<Register> {
                       borderRadius: new BorderRadius.circular(50.0),
                       // side: BorderSide(color: Colors.red),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        email.length == 0 ? _emailValidate = true : _emailValidate = false;
-                        password.length < 6 ? _passwordValidate = true : _passwordValidate = false;
-                      });
+                    onPressed: () async {
+                        if(email.length == 0) {
+                          setState(() => _emailValidate = true);
+                        }
+                        if(password.length < 6) {
+                          setState(() => _passwordValidate = true);
+                        }
+                        if(email.length != 0 && password.length >= 6) {
+                          setState(() => _passwordValidate = false);
+                          setState(() => _emailValidate = false);
+                          dynamic result = await _auth.createUserUsingEmailAndPassword(email, password);
+                          if(result == null) {
+                            setState(() => error = "Not valid Email");
+                          }
+                        }
                     }
                   )
                 ),
@@ -115,6 +125,11 @@ class _RegisterState extends State<Register> {
                     )
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                SizedBox(height: 20,),
+                Text(
+                  error,
+                  style: TextStyle(color: Colors.red),
                 )
             ],
           )
