@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/services/auth.dart';
+import 'package:loading/loading.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -18,12 +19,14 @@ class _SignInState extends State<SignIn> {
   bool _emailValidate = false;
   bool _passwordValidate = false;
   String error = '';
+  bool _isLoading = false;
   
   final AuthenticationService _auth = AuthenticationService();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+      return _isLoading? Loading():
+      Scaffold(
         backgroundColor: Colors.blue[900],
         body: Container(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -98,11 +101,17 @@ class _SignInState extends State<SignIn> {
                           setState(() => _passwordValidate = true);
                         }
                         if(email.length != 0 && password.length >= 6) {
-                          setState(() => _passwordValidate = false);
-                          setState(() => _emailValidate = false);
+                          setState((){
+                            _passwordValidate = false;
+                            _emailValidate = false;
+                            _isLoading = true;
+                          });
                           dynamic result = await _auth.signInUserUsingEmailAndPassword(email, password);
                           if(result == null) {
-                            setState(() => error = "Wrong Email or password!");
+                            setState(() {
+                              error = "Wrong Email or Password";
+                              _isLoading = false;
+                            });
                           }
                         }
                     }
@@ -110,7 +119,10 @@ class _SignInState extends State<SignIn> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Do not have an account?'),
+                    Text(
+                      'Do not have an account?',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     FlatButton(
                       textColor: Colors.blue,
                       child: Text(
