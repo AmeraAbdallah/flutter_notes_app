@@ -17,6 +17,6 @@ class _AuthenticateState extends State<Authenticate> {
 
   @override
   Widget build(BuildContext context) {
-    return (isSignInView) ?  SignIn(toggleIsSignInView: toggleIsSignInView) : Register(toggleIsSignInView: toggleIsSignInView);
+      return (isSignInView) ?  SignIn(toggleIsSignInView: toggleIsSignInView) : Register(toggleIsSignInView: toggleIsSignInView);
   }
 }
