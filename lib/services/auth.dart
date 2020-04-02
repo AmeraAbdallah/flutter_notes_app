@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:note_app/models/user.dart';
+import 'package:note_app/services/database.dart';
 
 class AuthenticationService {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -27,12 +28,16 @@ class AuthenticationService {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser firebaseUser = result.user;
-      return _fromFirebaseUserToUser(firebaseUser);
+      var user = _fromFirebaseUserToUser(firebaseUser);
+      DatabaseService(uid: user.uid).addToNotes('ddd', 'ddd', 'dddd');
+      return user;
     } catch(err) {
       print(err.toString());
       return null;
     }
   }
+
+    
 
     Future signInUserUsingEmailAndPassword(String email, String password) async {
     try {
@@ -52,4 +57,5 @@ class AuthenticationService {
       return null;
     }
   }
+  
 }
