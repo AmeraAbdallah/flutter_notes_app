@@ -7,13 +7,16 @@ class DatabaseService {
 
   DatabaseService({this.uid});
 
-  Future addToNotes(String title, String description, String color) async {
+  Future addToNotes(String title, String description) async {
     return await noteCollection.add({
       'title': title,
       'description': description,
-      'color': color,
       'user': uid
     });
+  }
+
+    Stream<QuerySnapshot> get notes {
+    return noteCollection.where('user', isEqualTo: uid).snapshots();
   }
 
 }
