@@ -20,45 +20,119 @@ extension ColorExtension on String {
 
 class Home extends StatelessWidget {
   final AuthenticationService _auth = AuthenticationService();
-       // final user = Provider.of<User>(context);
-    // DatabaseService(uid: user.uid);
+  // final user = Provider.of<User>(context);
+  // DatabaseService(uid: user.uid);
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final DatabaseService _db = DatabaseService(uid: user.uid);
     return StreamProvider<QuerySnapshot>.value(
       value: _db.notes,
-          child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100), // here the desired height
-            child: AppBar(
-              backgroundColor: Theme.of(context).accentColor,
-              title: Text(
-                "Notes",
-                style: TextStyle(color: "#16DB93".toColor(), fontSize: 24),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text(
-                    "Logout",
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  ),
-                  onPressed: () async {
-                    await _auth.logout();
-                  },
-                )
-              ],
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100), // here the desired height
+          child: AppBar(
+            backgroundColor: Theme.of(context).accentColor,
+            title: Text(
+              "Notes",
+              style: TextStyle(color: "#16DB93".toColor(), fontSize: 24),
             ),
-          ),
-          body: NotesList(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              // Add your onPressed code here!
-            },
-            child: Icon(Icons.add),
-            backgroundColor: "#A4036F".toColor(),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.white, fontSize: 24),
+                ),
+                onPressed: () async {
+                  await _auth.logout();
+                },
+              )
+            ],
           ),
         ),
+        body: NotesList(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _settingModalBottomSheet(context);
+          },
+          child: Icon(Icons.add),
+          backgroundColor: "#A4036F".toColor(),
+        ),
+      ),
     );
   }
+}
+
+void _settingModalBottomSheet(context) {
+  showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+          child: new Wrap(
+            children: <Widget>[
+              Container(
+                  color: "16DB93".toColor(),
+                  width: double.infinity,
+                  // height: 45,
+                  padding: new EdgeInsets.fromLTRB(10, 30, 10, 30),
+                  child: Text(
+                    'Add new Note :)',
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  )),
+              Container(
+                  padding: new EdgeInsets.fromLTRB(30, 20, 30, 20),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Title',
+                    ),
+                  )),
+              Container(
+                  padding: new EdgeInsets.fromLTRB(30, 20, 30, 20),
+                  child: TextField(
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Description',
+                    ),
+                  )),
+              Container(
+                padding: new EdgeInsets.fromLTRB(30, 20, 30, 20),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: RaisedButton(
+                        padding: new EdgeInsets.all(10),
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
+                        ),
+                        color: "#707070".toColor(),
+                        onPressed: () {},
+                      ),
+                    ),
+                    Expanded(
+                      child: OutlineButton(
+                        padding: new EdgeInsets.all(10),
+                        child: Text(
+                          "Add",
+                          style: TextStyle(
+                              color: "#A4036F".toColor(), fontSize: 24),
+                        ),
+                        borderSide:
+                            BorderSide(color: "#A4036F".toColor(), width: 2),
+                        onPressed: () {},
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      });
 }
