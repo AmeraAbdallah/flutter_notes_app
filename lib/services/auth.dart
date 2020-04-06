@@ -29,7 +29,7 @@ class AuthenticationService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       var user = _fromFirebaseUserToUser(firebaseUser);
-      DatabaseService(uid: user.uid).addToNotes('Lorem ipsum', 'Lorem ipsum dolor sit amet, ');
+      // DatabaseService().addToNotes('Lorem ipsum', 'Lorem ipsum dolor sit amet, ');
       return user;
     } catch(err) {
       print(err.toString());

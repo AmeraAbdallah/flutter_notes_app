@@ -4,6 +4,7 @@ import 'package:note_app/screens/home/notesList.dart';
 import 'package:note_app/services/auth.dart';
 import 'package:note_app/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:note_app/models/user.dart';
 
 extension ColorExtension on String {
   toColor() {
@@ -19,10 +20,14 @@ extension ColorExtension on String {
 
 class Home extends StatelessWidget {
   final AuthenticationService _auth = AuthenticationService();
+       // final user = Provider.of<User>(context);
+    // DatabaseService(uid: user.uid);
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+    final DatabaseService _db = DatabaseService(uid: user.uid);
     return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService().notes,
+      value: _db.notes,
           child: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(100), // here the desired height
