@@ -3,24 +3,6 @@ import 'package:note_app/models/note.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final List<Note> entries = <Note>[];
-final List<String> colorCodes = <String>[
-  '#EFEA5A',
-  '#6DC1A2',
-  '#BFC0C0',
-  '#F0B67F',
-  '#D6CFCB',
-  '#C7EFCF'
-];
-
-getColorIndex(int index) {
-  var colorIndex = index;
-  if (colorIndex > colorCodes.length) {
-    colorIndex = 0;
-  }
-  return colorIndex;
-}
-
 extension ColorExtension on String {
   toColorr() {
     var hexColor = this.replaceAll("#", "");
@@ -41,10 +23,27 @@ class NotesList extends StatefulWidget {
 class _NotesListState extends State<NotesList> {
   @override
   Widget build(BuildContext context) {
+    final List<Note> entries = <Note>[];
+    final List<String> colorCodes = <String>[
+      '#EFEA5A',
+      '#6DC1A2',
+      '#BFC0C0',
+      '#F0B67F',
+      '#D6CFCB',
+      '#C7EFCF'
+    ];
     final notes = Provider.of<QuerySnapshot>(context);
     for (var doc in notes.documents) {
       entries.add(
           Note(title: doc.data['title'], description: doc.data['description']));
+    }
+
+    int getColorIndex(int index) {
+      var colorIndex = index;
+      if (colorIndex > colorCodes.length) {
+        colorIndex = 0;
+      }
+      return colorIndex;
     }
 
     return ListView.separated(
@@ -54,7 +53,7 @@ class _NotesListState extends State<NotesList> {
         return Container(
             padding: const EdgeInsets.fromLTRB(30, 30, 20, 10),
             height: 150,
-            color: colorCodes[getColorIndex(index)].toString().toColorr(),
+            color: colorCodes[index].toString().toColorr(),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
