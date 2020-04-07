@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:note_app/models/note.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:note_app/screens/NoteDetails.dart';
 
 extension ColorExtension on String {
   toColorr() {
@@ -50,32 +51,40 @@ class _NotesListState extends State<NotesList> {
       padding: const EdgeInsets.all(50),
       itemCount: entries.length,
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-            padding: const EdgeInsets.fromLTRB(30, 30, 20, 10),
-            height: 150,
-            color: colorCodes[getColorIndex(index)].toString().toColorr(),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    '${entries[index].title}',
-                    style: TextStyle(color: "#172A3A".toColorr(), fontSize: 20),
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    '${entries[index].description}',
-                    style: TextStyle(
-                      color: "#172A3A".toColorr(),
-                      fontSize: 17,
+        return GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NoteDetails()),
+                );
+              },
+              child: Container(
+              padding: const EdgeInsets.fromLTRB(30, 30, 20, 10),
+              height: 150,
+              color: colorCodes[getColorIndex(index)].toString().toColorr(),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '${entries[index].title}',
+                      style: TextStyle(color: "#172A3A".toColorr(), fontSize: 20),
+                      textAlign: TextAlign.left,
                     ),
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                  )
-                ]));
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '${entries[index].description}',
+                      style: TextStyle(
+                        color: "#172A3A".toColorr(),
+                        fontSize: 17,
+                      ),
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                    )
+                  ])),
+        );
       },
       separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
