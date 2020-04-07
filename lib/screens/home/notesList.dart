@@ -34,8 +34,7 @@ class _NotesListState extends State<NotesList> {
     ];
     final notes = Provider.of<QuerySnapshot>(context);
     for (var doc in notes.documents) {
-      entries.add(
-          Note(title: doc.data['title'], description: doc.data['description']));
+      entries.add(Note(title: doc.data['title'], description: doc.data['description']));
     }
 
     int getColorIndex(int index) {

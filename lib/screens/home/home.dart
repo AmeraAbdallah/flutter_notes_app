@@ -18,14 +18,38 @@ extension ColorExtension on String {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final AuthenticationService _auth = AuthenticationService();
-  // final user = Provider.of<User>(context);
-  // DatabaseService(uid: user.uid);
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final DatabaseService _db = DatabaseService(uid: user.uid);
+
+    String title = '';
+    String description = '';
+
+    setTitle(val) {
+      setState(() {
+        title = val;
+      });
+    }
+
+    setDescription(val) {
+      setState(() {
+        description = val;
+      });
+    }
+
+    dynamic addNot() async {
+      await _db.addToNotes(title, description);
+    }
+
     return StreamProvider<QuerySnapshot>.value(
       value: _db.notes,
       child: Scaffold(
@@ -53,7 +77,7 @@ class Home extends StatelessWidget {
         body: NotesList(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            _settingModalBottomSheet(context);
+            _settingModalBottomSheet(context, (val) => setTitle(val),  (val) => setDescription(val), addNot);
           },
           child: Icon(Icons.add),
           backgroundColor: "#A4036F".toColor(),
@@ -63,7 +87,7 @@ class Home extends StatelessWidget {
   }
 }
 
-void _settingModalBottomSheet(context) {
+void _settingModalBottomSheet(context, setTitle, setDescription, addNote) {
   showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -87,6 +111,9 @@ void _settingModalBottomSheet(context) {
                       border: OutlineInputBorder(),
                       labelText: 'Title',
                     ),
+                    onChanged: (val){
+                      setTitle(val);
+                    },
                   )),
               Container(
                   padding: new EdgeInsets.fromLTRB(30, 20, 30, 20),
@@ -96,6 +123,9 @@ void _settingModalBottomSheet(context) {
                       border: OutlineInputBorder(),
                       labelText: 'Description',
                     ),
+                    onChanged: (val) {
+                      setDescription(val);
+                    },
                   )),
               Container(
                 padding: new EdgeInsets.fromLTRB(30, 20, 30, 20),
@@ -112,7 +142,9 @@ void _settingModalBottomSheet(context) {
                           ),
                         ),
                         color: "#707070".toColor(),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                     Expanded(
@@ -125,7 +157,10 @@ void _settingModalBottomSheet(context) {
                         ),
                         borderSide:
                             BorderSide(color: "#A4036F".toColor(), width: 2),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await addNote();
+                          Navigator.pop(context);
+                        },
                       ),
                     )
                   ],

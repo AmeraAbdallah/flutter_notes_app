@@ -7,7 +7,8 @@ class DatabaseService {
 
   DatabaseService({this.uid});
 
-  Future addToNotes(String title, String description) async {
+  Future addToNotes(title, description) async {
+    print(title + " " + description + " " + uid);
     return await noteCollection.add({
       'title': title,
       'description': description,
@@ -18,5 +19,4 @@ class DatabaseService {
   Stream<QuerySnapshot> get notes {
       return Firestore.instance.collection('notes').where('user', isEqualTo: uid).snapshots(); //not working probly
   }
-
 }
