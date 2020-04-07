@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:note_app/models/note.dart';
 import 'package:provider/provider.dart';
@@ -38,11 +40,10 @@ class _NotesListState extends State<NotesList> {
     }
 
     int getColorIndex(int index) {
-      var colorIndex = index;
-      if (colorIndex > colorCodes.length) {
-        colorIndex = 0;
+      if (index > colorCodes.length-1) {
+        return new Random().nextInt(colorCodes.length);
       }
-      return colorIndex;
+      return index;
     }
 
     return ListView.separated(
@@ -52,7 +53,7 @@ class _NotesListState extends State<NotesList> {
         return Container(
             padding: const EdgeInsets.fromLTRB(30, 30, 20, 10),
             height: 150,
-            color: colorCodes[index].toString().toColorr(),
+            color: colorCodes[getColorIndex(index)].toString().toColorr(),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
