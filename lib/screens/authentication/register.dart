@@ -117,7 +117,7 @@ class _RegisterState extends State<Register> {
                                   fontSize: 24,
                                 ),
                               ),
-                              color: "#8C86AA".toColor(),
+                              color: Style.grey,
                               onPressed: () async {
                                 if (email.length == 0) {
                                   setState(() => _emailValidate = true);
@@ -147,8 +147,7 @@ class _RegisterState extends State<Register> {
                         children: <Widget>[
                           Text(
                             'Already have an account?',
-                            style:
-                                TextStyle(color: Style.lightGrey, fontSize: 18),
+                            style: TextStyle(color: Style.lightGrey, fontSize: 18),
                           ),
                           FlatButton(
                             textColor: Style.lightGrey,
@@ -156,7 +155,8 @@ class _RegisterState extends State<Register> {
                               'Sign in',
                               style: TextStyle(
                                   fontSize: 18,
-                                  decoration: TextDecoration.underline),
+                                  decoration: TextDecoration.underline
+                                ),
                             ),
                             onPressed: () {
                               widget.toggleIsSignInView();
