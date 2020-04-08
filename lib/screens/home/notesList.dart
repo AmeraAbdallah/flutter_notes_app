@@ -55,7 +55,7 @@ class _NotesListState extends State<NotesList> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NoteDetails()),
+                  MaterialPageRoute(builder: (context) => NoteDetails(note: entries[index])),
                 );
               },
               child: Container(
