@@ -27,7 +27,7 @@ class _RegisterState extends State<Register> {
         : Scaffold(
             backgroundColor: Colors.white,
             body: Container(
-              child: Column(
+                child: Column(
               children: <Widget>[
                 Expanded(
                   flex: 5,
@@ -41,7 +41,7 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 new Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Column(
                     children: <Widget>[
                       TextField(
@@ -147,16 +147,18 @@ class _RegisterState extends State<Register> {
                         children: <Widget>[
                           Text(
                             'Already have an account?',
-                            style: TextStyle(color: Style.lightGrey, fontSize: 18),
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 18,
+                            ),
                           ),
                           FlatButton(
-                            textColor: Style.lightGrey,
+                            textColor: Colors.black54,
                             child: Text(
                               'Sign in',
                               style: TextStyle(
-                                  fontSize: 18,
-                                  decoration: TextDecoration.underline
-                                ),
+                                  fontSize: 16,
+                                  decoration: TextDecoration.underline),
                             ),
                             onPressed: () {
                               widget.toggleIsSignInView();

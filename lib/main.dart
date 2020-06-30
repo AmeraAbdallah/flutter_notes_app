@@ -4,17 +4,17 @@ import 'package:note_app/screens/wrapper.dart';
 import 'package:note_app/services/auth.dart';
 import 'package:provider/provider.dart';
 
-extension ColorExtension on String {
-  toColor() {
-    var hexColor = this.replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
-    }
-    if (hexColor.length == 8) {
-      return Color(int.parse("0x$hexColor"));
-    }
-  }
-}
+//extension ColorExtension on String {
+//  toColor() {
+//    var hexColor = this.replaceAll("#", "");
+//    if (hexColor.length == 6) {
+//      hexColor = "FF" + hexColor;
+//    }
+//    if (hexColor.length == 8) {
+//      return Color(int.parse("0x$hexColor"));
+//    }
+//  }
+//}
 
 void main() => runApp(MyApp());
 
@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // Define the default brightness and colors.
         // brightness: "#A4036F".toColor(), //dark pink
-        primaryColor: "#16DB93".toColor(), //green
-        accentColor: "#8C86AA".toColor() //purble
+        primaryColor: Color(0xFF16DB93), //green
+        accentColor: Color(0x8C86AA) //purble
       ),
       home: Wrapper()
     ),

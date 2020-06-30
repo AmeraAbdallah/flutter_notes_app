@@ -6,17 +6,17 @@ import 'package:note_app/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:note_app/models/user.dart';
 
-extension ColorExtension on String {
-  toColor() {
-    var hexColor = this.replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
-    }
-    if (hexColor.length == 8) {
-      return Color(int.parse("0x$hexColor"));
-    }
-  }
-}
+//extension ColorExtension on String {
+//  toColor() {
+//    var hexColor = this.replaceAll("#", "");
+//    if (hexColor.length == 6) {
+//      hexColor = "FF" + hexColor;
+//    }
+//    if (hexColor.length == 8) {
+//      return Color(int.parse("0x$hexColor"));
+//    }
+//  }
+//}
 
 class Home extends StatefulWidget {
   @override
@@ -59,7 +59,7 @@ class _HomeState extends State<Home> {
             backgroundColor: Theme.of(context).accentColor,
             title: Text(
               "Notes",
-              style: TextStyle(color: "#16DB93".toColor(), fontSize: 24),
+              style: TextStyle(color: Color(0x16DB93), fontSize: 24),
             ),
             actions: <Widget>[
               FlatButton(
@@ -80,7 +80,7 @@ class _HomeState extends State<Home> {
             _settingModalBottomSheet(context, (val) => setTitle(val),  (val) => setDescription(val), addNot);
           },
           child: Icon(Icons.add),
-          backgroundColor: "#A4036F".toColor(),
+          backgroundColor: Color(0xFFA4036F),
         ),
       ),
     );
@@ -96,7 +96,7 @@ void _settingModalBottomSheet(context, setTitle, setDescription, addNote) {
           child: new Wrap(
             children: <Widget>[
               Container(
-                  color: "16DB93".toColor(),
+                  color: Color(0x16DB93),
                   width: double.infinity,
                   // height: 45,
                   padding: new EdgeInsets.fromLTRB(10, 30, 10, 30),
@@ -141,7 +141,7 @@ void _settingModalBottomSheet(context, setTitle, setDescription, addNote) {
                             fontSize: 24,
                           ),
                         ),
-                        color: "#707070".toColor(),
+                        color: Color(0x707070),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -153,10 +153,10 @@ void _settingModalBottomSheet(context, setTitle, setDescription, addNote) {
                         child: Text(
                           "Add",
                           style: TextStyle(
-                              color: "#A4036F".toColor(), fontSize: 24),
+                              color: Color(0xA4036F), fontSize: 24),
                         ),
                         borderSide:
-                            BorderSide(color: "#A4036F".toColor(), width: 2),
+                            BorderSide(color: Color(0xA4036F), width: 2),
                         onPressed: () async {
                           await addNote();
                           Navigator.pop(context);
